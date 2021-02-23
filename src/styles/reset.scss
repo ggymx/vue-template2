@@ -6,3 +6,12 @@ body {
   margin: 0;
   // background: red;
 }
+
+//element-ui
+.custom-form {
+  /deep/ .el-form-item__label,
+  .el-form-item__content,
+  .el-input__inner {
+    font-size: 18px;
+  }
+}

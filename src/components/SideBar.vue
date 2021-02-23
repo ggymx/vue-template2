@@ -12,37 +12,67 @@
     </div>
     <div class="nav-container">
       <el-menu
-        default-active="2"
         background-color="#000"
         text-color="#fff"
         active-text-color="#ffd04b"
         :collapse="isCollapse"
+        :default-active="
+          activePages.length
+            ? activePages[activePages.length - 1].path
+            : '/about'
+        "
         router
+        @select="openPage"
       >
-        <el-menu-item index="/about">
-          <i class="el-icon-menu"></i>
-          <span slot="title">关于</span>
-        </el-menu-item>
-        <el-menu-item index="/work">
-          <i class="el-icon-document"></i>
-          <span slot="title">工作台</span>
-        </el-menu-item>
-        <el-menu-item>
-          <i class="el-icon-setting"></i>
-          <span slot="title">商家管理</span>
-        </el-menu-item>
+        <template v-for="route in routes">
+          <el-menu-item :index="route.path">
+            <i :class="[route.meta.icon]"></i>
+            <span slot="title">{{ route.meta.title }}</span>
+          </el-menu-item>
+        </template>
       </el-menu>
     </div>
   </div>
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: "SideBar",
   data() {
     return {
       isCollapse: false,
+      routes: [],
     };
+  },
+  mounted() {
+    this.initRouter();
+    console.log("activePages", this.activePages);
+  },
+  computed: {
+    ...mapGetters(["activePages"]),
+  },
+  methods: {
+    ...mapActions(["setOpenPage"]),
+    openPage(pageIndex) {
+      //将新打开的页面路由添加到tag中
+      this.routes.forEach(({ path, meta }) => {
+        if (path == pageIndex) {
+          this.setOpenPage({ path, meta });
+        }
+      });
+    },
+    //初始化侧边栏路由
+    initRouter() {
+      console.log("this.routes", this.$router.options.routes);
+      this.$router.options.routes.forEach((route) => {
+        if (route.name == "Home") {
+          route.children.forEach((sdRouter) => {
+            this.routes.push(sdRouter);
+          });
+        }
+      });
+    },
   },
 };
 </script>
@@ -73,11 +103,8 @@ export default {
   // padding-left: 20px;
   display: flex;
   flex-direction: column;
-  a {
-    color: #fff;
-    font-size: 16px;
-    margin-top: 20px;
-    text-decoration: none;
+  /deep/ .el-menu-item {
+    font-size: 18px;
   }
 }
 </style>

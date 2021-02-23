@@ -64,7 +64,7 @@ export default {
 }
 .title {
   color: #fff;
-  font-size: 20px;
+  font-size: 22px;
 }
 .right-container {
   display: flex;
@@ -84,6 +84,7 @@ export default {
   // margin-right: 10px;
 }
 .username {
+  font-size: 20px;
   margin-left: 10px;
   margin-right: 10px;
 }

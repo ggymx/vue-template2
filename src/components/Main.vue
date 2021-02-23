@@ -12,7 +12,7 @@ export default {
 
 <style lang="scss" scoped>
 #main {
-  height: calc(100vh - 80px);
+  height: calc(100vh - 165.6px);
   padding: 10px;
 }
 </style>

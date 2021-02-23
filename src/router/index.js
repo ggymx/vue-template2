@@ -24,11 +24,28 @@ const routes = [
         // which is lazy-loaded when the route is visited.
         component: () =>
           import(/* webpackChunkName: "about" */ "../views/about/about.vue"),
+        meta: {
+          title: "关于",
+          icon: "el-icon-menu",
+        },
       },
       {
         path: "/work",
         name: "Work",
         component: () => import("../views/work/work.vue"),
+        meta: {
+          title: "工作台",
+          icon: "el-icon-aim",
+        },
+      },
+      {
+        path: "merchant/list",
+        name: "MerchantList",
+        component: () => import("../views/merchant-manage/merchant-list.vue"),
+        meta: {
+          title: "商家管理",
+          icon: "el-icon-bangzhu",
+        },
       },
     ],
   },
@@ -40,7 +57,6 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   //进入系统前校验
-  // console.log("to------", to);
   if (to.path == "/") {
     if (localStorage.getItem("isLogin")) {
       next();

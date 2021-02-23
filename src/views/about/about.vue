@@ -8,6 +8,8 @@
           :rules="rules"
           ref="form"
           label-width="100px"
+          size="medium"
+          class="custom-form"
         >
           <el-form-item label="头像" prop="userName">
             <el-avatar
@@ -111,6 +113,6 @@ export default {
   flex-direction: column;
 }
 .label {
-  font-size: 22px;
+  font-size: 24px;
 }
 </style>
