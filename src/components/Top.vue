@@ -6,7 +6,7 @@
     </div>
     <div class="right-container">
       <i class="el-icon-rank fullScreen-btn" @click="fullScreenHandler"></i>
-      <span class="username">{{ userInfo.name }}</span>
+      <span class="username">{{ userInfo.name || "--" }}</span>
       <el-avatar
         shape="circle"
         size="medium"
@@ -28,6 +28,9 @@ export default {
   },
   computed: {
     ...mapGetters(["userInfo"]),
+  },
+  mounted() {
+    // console.log("userInfo", this.userInfo);
   },
   methods: {
     fullScreenHandler() {

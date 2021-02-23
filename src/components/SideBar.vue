@@ -67,7 +67,9 @@ export default {
       this.$router.options.routes.forEach((route) => {
         if (route.name == "Home") {
           route.children.forEach((sdRouter) => {
-            this.routes.push(sdRouter);
+            if (sdRouter.meta.hidden != false) {
+              this.routes.push(sdRouter);
+            }
           });
         }
       });

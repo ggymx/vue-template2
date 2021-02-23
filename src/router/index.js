@@ -52,6 +52,7 @@ const routes = [
         name: "MerchantDetail",
         component: () => import("../views/merchant-manage/merchant-detail.vue"),
         meta: {
+          hidden: false,
           title: "商家详情",
           icon: "el-icon-bangzhu",
         },
@@ -61,6 +62,7 @@ const routes = [
         name: "MerchantEdit",
         component: () => import("../views/merchant-manage/merchant-edit.vue"),
         meta: {
+          hidden: false,
           title: "商家编辑",
           icon: "el-icon-bangzhu",
         },
