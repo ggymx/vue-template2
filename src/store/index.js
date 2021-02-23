@@ -52,8 +52,13 @@ export default new Vuex.Store({
       );
     },
     SET_BREADCTUMBCAHCE(state, data) {
-      state.breadcrumbCache.length = 0;
-      state.breadcrumbCache.push(data);
+      console.log("设置面包屑---", data);
+      if (data.meta.parent) {
+        state.breadcrumbCache.push(data);
+      } else {
+        state.breadcrumbCache.length = 0;
+        state.breadcrumbCache.push(data);
+      }
     },
   },
   actions: {
