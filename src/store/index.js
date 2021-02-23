@@ -8,6 +8,7 @@ export default new Vuex.Store({
     userInfo: JSON.parse(localStorage.getItem("userInfo")),
     //tags上打开的页面
     openPages: [],
+    activePage: {},
     //tags打开的页面历史记录
     activePages: [],
     breadcrumbCache: [],
@@ -17,6 +18,7 @@ export default new Vuex.Store({
     openPages: (state) => state.openPages,
     activePages: (state) => state.activePages,
     breadcrumbCache: (state) => state.breadcrumbCache,
+    activePage: (state) => state.activePage,
   },
   mutations: {
     SET_USERINFO(state, data) {
@@ -35,7 +37,8 @@ export default new Vuex.Store({
       state.openPages.splice(pageIndex, 1);
     },
     SET_ACTIVEPAGE(state, data) {
-      state.activePages.push(data);
+      // state.activePages.push(data);
+      state.activePage = data;
     },
     SET_CLOASEACTIVEPAGE(state, data) {
       // const pageIndex = state.activePages.findIndex(

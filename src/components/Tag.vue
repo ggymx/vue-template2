@@ -5,12 +5,7 @@
       v-for="page in openPages"
       :key="page.title"
       closable
-      :type="
-        activePages.length &&
-        page.path == activePages[activePages.length - 1].path
-          ? ''
-          : 'info'
-      "
+      :type="page.path == activePage.path ? '' : 'info'"
       style="margin-right:10px;"
       @click="switchPage(page)"
       @close="closePage(page)"
@@ -30,7 +25,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["openPages", "activePages"]),
+    ...mapGetters(["openPages", "activePage"]),
   },
   methods: {
     ...mapActions(["setActivePage", "setClosePage", "setBreadcrumbCache"]),
@@ -40,7 +35,7 @@ export default {
         return;
       }
       this.setActivePage(page);
-      this.setBreadcrumbCache(page);
+      // this.setBreadcrumbCache(page);
       this.currentPage = page;
       this.$router.push({
         path: page.path,
@@ -48,32 +43,22 @@ export default {
     },
     closePage(page) {
       //若删除tag不是当前页，则只删除tag即可
-      if (page.path != this.activePages[this.activePages.length - 1]?.path) {
+      if (page.path != this.activePage.path) {
         this.setClosePage(page);
       } else {
+        //关闭当前激活页时 默认跳转前一个tag，若激活的是第一个则跳转到后一个tag，tag全部关闭时不跳转
+        const lastPageIndex =
+          this.openPages.findIndex((item) => item.path == page.path) - 1;
         this.setClosePage(page);
-        if (this.activePages[this.activePages.length - 1]) {
-          this.setBreadcrumbCache(
-            this.activePages[this.activePages.length - 1]
-          );
-        } else {
-          this.$router.options.routes.forEach((route) => {
-            if (route.name == "Home") {
-              //面包屑必须要有一个
-              this.setBreadcrumbCache(
-                route.children.filter((sdRouter) => {
-                  return sdRouter.path == "/about";
-                })[0]
-              );
-            }
+        //关闭当前页面后回退到上一次页面
+        if (this.openPages.length) {
+          this.$router.push({
+            path:
+              lastPageIndex == -1
+                ? this.openPages[lastPageIndex + 1]?.path
+                : this.openPages[lastPageIndex]?.path,
           });
         }
-        //关闭当前页面后回退到上一次页面
-        this.$router.push({
-          path: this.activePages.length
-            ? this.activePages[this.activePages.length - 1]?.path
-            : "/",
-        });
       }
     },
   },

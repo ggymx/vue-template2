@@ -32,12 +32,17 @@
           <el-table-column fixed="right" label="操作" width="100">
             <template slot-scope="scope">
               <el-button
-                @click="handleClick(scope.row)"
+                @click="handleClick('detail', scope.row)"
                 type="text"
                 size="small"
                 >查看</el-button
               >
-              <el-button type="text" size="small">编辑</el-button>
+              <el-button
+                type="text"
+                @click="handleClick('edit', scope.row)"
+                size="small"
+                >编辑</el-button
+              >
             </template>
           </el-table-column>
         </el-table>
@@ -88,6 +93,19 @@ export default {
         },
       ],
     };
+  },
+  methods: {
+    handleClick(type, row) {
+      if (type == "edit") {
+        this.$router.push({
+          path: "/merchant/edit",
+        });
+      } else {
+        this.$router.push({
+          path: "/merchant/detail",
+        });
+      }
+    },
   },
 };
 </script>

@@ -16,11 +16,7 @@
         text-color="#fff"
         active-text-color="#ffd04b"
         :collapse="isCollapse"
-        :default-active="
-          activePages.length
-            ? activePages[activePages.length - 1].path
-            : '/about'
-        "
+        :default-active="activePage.path"
         router
         @select="openPage"
       >
@@ -49,7 +45,7 @@ export default {
     this.initRouter();
   },
   computed: {
-    ...mapGetters(["activePages"]),
+    ...mapGetters(["activePage"]),
   },
   methods: {
     ...mapActions(["setOpenPage", "setBreadcrumbCache"]),
@@ -58,7 +54,8 @@ export default {
       this.routes.forEach((page) => {
         if (page.path == pageIndex) {
           this.setOpenPage(page);
-          this.setBreadcrumbCache(page);
+          console.log("测试66666666");
+          // this.setBreadcrumbCache(page);
         }
       });
     },
