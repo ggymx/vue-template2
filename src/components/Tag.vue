@@ -22,7 +22,9 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   name: "Tag",
   data() {
-    return {};
+    return {
+      currentPage: {},
+    };
   },
   computed: {
     ...mapGetters(["openPages", "activePages"]),
@@ -30,13 +32,22 @@ export default {
   methods: {
     ...mapActions(["setActivePage", "setClosePage"]),
     switchPage(page) {
+      //不能重复点击当前页
+      if (this.currentPage.path == page.path) {
+        return;
+      }
       this.setActivePage(page);
+      this.currentPage = page;
       this.$router.push({
         path: page.path,
       });
     },
     closePage(page) {
       this.setClosePage(page);
+      //若删除tag不是当前页，则只删除tag即可
+      if (page.path != this.activePages[this.activePages.length - 1].path) {
+        return;
+      }
       //关闭当前页面后回退到上一次页面
       this.$router.push({
         path: this.activePages.length

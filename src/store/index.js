@@ -36,11 +36,16 @@ export default new Vuex.Store({
       state.activePages.push(data);
     },
     SET_CLOASEACTIVEPAGE(state, data) {
-      const pageIndex = state.activePages.findIndex(
-        (page) => page.path == data.path
+      // const pageIndex = state.activePages.findIndex(
+      //   (page) => page.path == data.path
+      // );
+      // //关闭页面
+      // state.activePages.splice(pageIndex, 1);
+      //关闭tag后把缓存中该页面的记录全部删除
+      state.activePages = state.activePages.filter(
+        (page) => page.path != data.path
       );
-      //关闭页面
-      state.activePages.splice(pageIndex, 1);
+      console.log("当前缓存的页面-------", state.activePages);
     },
   },
   actions: {
