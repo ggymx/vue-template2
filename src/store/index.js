@@ -6,14 +6,17 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     userInfo: JSON.parse(localStorage.getItem("userInfo")),
-    //打开的页面
+    //tags上打开的页面
     openPages: [],
+    //tags打开的页面历史记录
     activePages: [],
+    breadcrumbCache: [],
   },
   getters: {
     userInfo: (state) => state.userInfo,
     openPages: (state) => state.openPages,
     activePages: (state) => state.activePages,
+    breadcrumbCache: (state) => state.breadcrumbCache,
   },
   mutations: {
     SET_USERINFO(state, data) {
@@ -28,7 +31,6 @@ export default new Vuex.Store({
       const pageIndex = state.openPages.findIndex(
         (page) => page.path == data.path
       );
-      console.log("关闭页面的index", pageIndex);
       //关闭页面
       state.openPages.splice(pageIndex, 1);
     },
@@ -45,7 +47,10 @@ export default new Vuex.Store({
       state.activePages = state.activePages.filter(
         (page) => page.path != data.path
       );
-      console.log("当前缓存的页面-------", state.activePages);
+    },
+    SET_BREADCTUMBCAHCE(state, data) {
+      state.breadcrumbCache.length = 0;
+      state.breadcrumbCache.push(data);
     },
   },
   actions: {
@@ -71,6 +76,9 @@ export default new Vuex.Store({
     },
     setCloseActivePage() {
       commit("SET_CLOASEACTIVEPAGE", data);
+    },
+    setBreadcrumbCache({ commit }, data) {
+      commit("SET_BREADCTUMBCAHCE", data);
     },
   },
   modules: {},

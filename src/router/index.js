@@ -39,11 +39,29 @@ const routes = [
         },
       },
       {
-        path: "merchant/list",
+        path: "/merchant/list",
         name: "MerchantList",
         component: () => import("../views/merchant-manage/merchant-list.vue"),
         meta: {
           title: "商家管理",
+          icon: "el-icon-bangzhu",
+        },
+      },
+      {
+        path: "/merchant/detail",
+        name: "MerchantDetail",
+        component: () => import("../views/merchant-manage/merchant-detail.vue"),
+        meta: {
+          title: "商家详情",
+          icon: "el-icon-bangzhu",
+        },
+      },
+      {
+        path: "/merchant/edit",
+        name: "MerchantEdit",
+        component: () => import("../views/merchant-manage/merchant-edit.vue"),
+        meta: {
+          title: "商家编辑",
           icon: "el-icon-bangzhu",
         },
       },

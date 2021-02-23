@@ -47,24 +47,23 @@ export default {
   },
   mounted() {
     this.initRouter();
-    console.log("activePages", this.activePages);
   },
   computed: {
     ...mapGetters(["activePages"]),
   },
   methods: {
-    ...mapActions(["setOpenPage"]),
+    ...mapActions(["setOpenPage", "setBreadcrumbCache"]),
     openPage(pageIndex) {
       //将新打开的页面路由添加到tag中
-      this.routes.forEach(({ path, meta }) => {
-        if (path == pageIndex) {
-          this.setOpenPage({ path, meta });
+      this.routes.forEach((page) => {
+        if (page.path == pageIndex) {
+          this.setOpenPage(page);
+          this.setBreadcrumbCache(page);
         }
       });
     },
     //初始化侧边栏路由
     initRouter() {
-      console.log("this.routes", this.$router.options.routes);
       this.$router.options.routes.forEach((route) => {
         if (route.name == "Home") {
           route.children.forEach((sdRouter) => {
